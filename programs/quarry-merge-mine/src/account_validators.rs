@@ -50,8 +50,8 @@ impl<'info> Validate<'info> for InitMergeMiner<'info> {
 impl<'info> Validate<'info> for InitMiner<'info> {
     fn validate(&self) -> ProgramResult {
         require!(
-            self.quarry.token_mint_key == self.pool.primary_mint
-                || self.quarry.token_mint_key == self.pool.replica_mint,
+            self.quarry.collection == self.pool.primary_mint
+            || self.quarry.collection == self.pool.replica_mint,
             InvalidMiner
         );
 
@@ -64,7 +64,8 @@ impl<'info> Validate<'info> for InitMiner<'info> {
         assert_ata!(
             self.miner_vault,
             self.miner,
-            self.quarry.token_mint_key,
+            // self.quarry.update_authority_key,
+            self.quarry.collection,
             "miner_vault"
         );
 
@@ -139,7 +140,8 @@ impl<'info> Validate<'info> for ClaimRewards<'info> {
         );
         assert_keys_eq!(
             self.stake_token_account.mint,
-            self.stake.quarry.token_mint_key,
+            // self.stake.quarry.update_authority_key,
+            self.stake.quarry.collection,
             "stake_token_account.mint"
         );
 
@@ -160,9 +162,10 @@ impl<'info> Validate<'info> for QuarryStakePrimary<'info> {
 
         assert_keys_eq!(self.mm_owner, self.stake.mm.owner, "mm_owner");
         assert_keys_eq!(
-            self.stake.quarry.token_mint_key,
+            // self.stake.quarry.update_authority_key,
+            self.stake.quarry.collection,
             self.stake.pool.primary_mint,
-            "stake.quarry.token_mint_key"
+            "stake.quarry.collection"
         );
         assert_ata!(
             self.mm_primary_token_account,
@@ -190,9 +193,10 @@ impl<'info> Validate<'info> for QuarryStakeReplica<'info> {
             "stake.pool.replica_mint"
         );
         assert_keys_eq!(
-            self.stake.quarry.token_mint_key,
+            // self.stake.quarry.update_authority_key,
+            self.stake.quarry.collection,
             self.replica_mint,
-            "stake.quarry.token_mint_key"
+            "stake.quarry.collection"
         );
         assert_ata!(
             self.replica_mint_token_account,
@@ -216,7 +220,8 @@ impl<'info> Validate<'info> for QuarryStake<'info> {
         assert_ata!(
             self.miner_vault,
             *self.miner,
-            self.quarry.token_mint_key,
+            // self.quarry.update_authority_key,
+            self.quarry.collection,
             "miner_vault"
         );
 

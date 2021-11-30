@@ -1,9 +1,9 @@
 import { buildCoderMap } from "@saberhq/anchor-contrib";
 import { PublicKey } from "@solana/web3.js";
 
-import { QuarryMineJSON } from "./idls/quarry_mine";
-import { QuarryMintWrapperJSON } from "./idls/quarry_mint_wrapper";
-import { QuarryRedeemerJSON } from "./idls/quarry_redeemer";
+import { UquarryUmineJSON } from "./idls/quarry_mine";
+import { UquarryUmintUwrapperJSON } from "./idls/quarry_mint_wrapper";
+import { UquarryUredeemerJSON } from "./idls/quarry_redeemer";
 import type {
   MineProgram,
   MineTypes,
@@ -14,10 +14,10 @@ import type {
   QuarryOperatorProgram,
   QuarryOperatorTypes,
 } from "./programs";
-import { QuarryMergeMineJSON, QuarryOperatorJSON } from "./programs";
+import { UquarryUmergeUmineJSON, UquarryUoperatorJSON } from "./programs";
 import type { RedeemerProgram, RedeemerTypes } from "./programs/redeemer";
 import type { RegistryProgram, RegistryTypes } from "./programs/registry";
-import { QuarryRegistryJSON } from "./programs/registry";
+import { UquarryUregistryJSON } from "./programs/registry";
 
 /**
  * Types of all programs.
@@ -47,12 +47,12 @@ export const QUARRY_ADDRESSES = {
  * Quarry program IDLs.
  */
 export const QUARRY_IDLS = {
-  MergeMine: QuarryMergeMineJSON,
-  Mine: QuarryMineJSON,
-  MintWrapper: QuarryMintWrapperJSON,
-  Operator: QuarryOperatorJSON,
-  Redeemer: QuarryRedeemerJSON,
-  Registry: QuarryRegistryJSON,
+  MergeMine: UquarryUmergeUmineJSON,
+  Mine: UquarryUmineJSON,
+  MintWrapper: UquarryUmintUwrapperJSON,
+  Operator: UquarryUoperatorJSON,
+  Redeemer: UquarryUredeemerJSON,
+  Registry: UquarryUregistryJSON,
 };
 
 /**

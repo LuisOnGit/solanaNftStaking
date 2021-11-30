@@ -16,13 +16,18 @@ export const findRewarderAddress = async (
 export const findQuarryAddress = async (
   rewarder: PublicKey,
   tokenMint: PublicKey,
-  programID: PublicKey = QUARRY_ADDRESSES.Mine
+  programID: PublicKey = QUARRY_ADDRESSES.Mine,
+  nftMintUpdateAuthority?: PublicKey | undefined
 ): Promise<[PublicKey, number]> => {
+  console.log("nftMintUpdateAuthority", nftMintUpdateAuthority);
+  const mint = nftMintUpdateAuthority ? nftMintUpdateAuthority : tokenMint;
+  console.log("mint", mint);
   return await PublicKey.findProgramAddress(
     [
       Buffer.from(utils.bytes.utf8.encode("Quarry")),
       rewarder.toBytes(),
-      tokenMint.toBytes(),
+      // updateAuthority.toBytes(),
+      mint.toBytes(),
     ],
     programID
   );
@@ -31,14 +36,29 @@ export const findQuarryAddress = async (
 export const findMinerAddress = async (
   quarry: PublicKey,
   authority: PublicKey,
+  nonFungibleMint?: PublicKey,
+  // token_mint_key: PublicKey, idk maybe add this
   programID: PublicKey = QUARRY_ADDRESSES.Mine
 ): Promise<[PublicKey, number]> => {
-  return await PublicKey.findProgramAddress(
-    [
-      Buffer.from(utils.bytes.utf8.encode("Miner")),
-      quarry.toBytes(),
-      authority.toBytes(),
-    ],
-    programID
-  );
+  // ?? fix this
+  if (nonFungibleMint) {
+    return await PublicKey.findProgramAddress(
+      [
+        Buffer.from(utils.bytes.utf8.encode("Miner")),
+        quarry.toBytes(),
+        authority.toBytes(),
+        nonFungibleMint.toBytes(),
+      ],
+      programID
+    );
+  } else {
+    return await PublicKey.findProgramAddress(
+      [
+        Buffer.from(utils.bytes.utf8.encode("Miner")),
+        quarry.toBytes(),
+        authority.toBytes(),
+      ],
+      programID
+    );
+  }
 };
